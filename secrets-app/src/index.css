@@ -18,3 +18,10 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+h2 {
+  color: darkslategray;
+}
+h3 {
+  color: darkslategray;
+}
