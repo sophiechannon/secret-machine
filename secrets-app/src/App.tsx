@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import { Form, FormValues } from "./components/Form";
-import { Thanks } from "./components/Thanks";
+import { FormValues } from "./components/Form";
+import { FormWrapper } from "./components/FormWrapper";
 
 export const App = () => {
   const [name, setName] = useState<string | undefined>(undefined);
@@ -24,30 +24,46 @@ export const App = () => {
     }
   };
 
+  const startOver = (data: FormValues | boolean) => {
+    if (typeof data === "boolean") {
+      setName(undefined);
+      setSecret(undefined);
+      setAnswer(undefined);
+    }
+  };
+
   return (
     <div className="App">
       {!secret && (
         <div className="form-section">
           {!name ? (
-            <Form
+            <FormWrapper
               isNameForm={true}
               isEntering={true}
               submitForm={submitNameForm}
             />
           ) : (
-            <Form isEntering={true} submitForm={submitSecretForm} />
+            <FormWrapper isEntering={true} submitForm={submitSecretForm} />
           )}
         </div>
       )}
-
       <div className="confirmation">
         {name && secret && answer == undefined && (
-          <Form name={name} secret={secret} submitForm={submitLockForm} />
+          <FormWrapper
+            name={name}
+            secret={secret}
+            submitForm={submitLockForm}
+          />
         )}
       </div>
       <div className="thanks-section">
         {answer !== undefined && name && (
-          <Thanks name={name} isLocked={!!answer} />
+          <FormWrapper
+            submitForm={startOver}
+            isStartOver={true}
+            isLocked={!!answer}
+            name={name}
+          ></FormWrapper>
         )}
       </div>
     </div>
